@@ -25,9 +25,14 @@ st.write('The Name of your Smooothie will be: ', name_on_order)
 cnx = st.connection("snowflake")
 session = cnx.session()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col("FRUIT_NAME"), col("search_on") )
-st.dataframe(data=my_dataframe, use_container_width=True)
-st.stop()
+#st.dataframe(data=my_dataframe, use_container_width=True)
+#st.stop()
 ingredients_list = st.multiselect('Choose upto 5 ingredients', my_dataframe, max_selections=5)
+
+#Convert snowflakes DataFrame to a Pandas Data Frame so we can use the LOC fuction
+pd_df =mydata_frame.to_pandas()
+st.dataframe(pd_df)
+st.stop()
 
 if ingredients_list:
     st.write(ingredients_list)
